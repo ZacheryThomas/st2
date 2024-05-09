@@ -633,7 +633,7 @@ class ParamikoSSHClient(object):
         Try to detect private key type and return paramiko.PKey object.
         """
 
-        for cls in [paramiko.RSAKey, paramiko.DSSKey, paramiko.ECDSAKey]:
+        for cls in [paramiko.RSAKey, paramiko.DSSKey, paramiko.ECDSAKey, paramiko.Ed25519Key]:
             try:
                 key = cls.from_private_key(StringIO(key_material), password=passphrase)
             except paramiko.ssh_exception.SSHException:
@@ -836,7 +836,7 @@ class ParamikoSSHClient(object):
 
     @staticmethod
     def _is_key_file_needs_passphrase(file):
-        for cls in [paramiko.RSAKey, paramiko.DSSKey, paramiko.ECDSAKey]:
+        for cls in [paramiko.RSAKey, paramiko.DSSKey, paramiko.ECDSAKey, paramiko.Ed25519Key]:
             try:
                 cls.from_private_key_file(file, password=None)
             except paramiko.ssh_exception.PasswordRequiredException:
